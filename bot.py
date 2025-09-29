@@ -1,6 +1,6 @@
 import discord
 import os
-import requests
+import aiohttp
 from dotenv import load_dotenv
 
 # Cargar variables del archivo .env
@@ -8,7 +8,7 @@ load_dotenv()
 TOKEN = os.environ.get("DISCORD_TOKEN")
 N8N_WEBHOOK_URL = os.environ.get("N8N_WEBHOOK_URL")
 
-# Configurar intents
+# Configurar intents para leer mensajes
 intents = discord.Intents.default()
 intents.message_content = True
 client = discord.Client(intents=intents)
@@ -23,7 +23,7 @@ async def on_message(message):
     if message.author == client.user:
         return
 
-    # Preparar datos para n8n
+    # Preparar payload para n8n
     payload = {
         "usuario": message.author.name,
         "mensaje": message.content,
@@ -31,10 +31,11 @@ async def on_message(message):
     }
 
     # Enviar datos a n8n
-    try:
-        requests.post(N8N_WEBHOOK_URL, json=payload)
-    except Exception as e:
-        print("Error enviando a n8n:", e)
+    async with aiohttp.ClientSession() as session:
+        try:
+            await session.post(N8N_WEBHOOK_URL, json=payload)
+        except Exception as e:
+            print("Error enviando a n8n:", e)
 
 # Ejecutar bot
 client.run(TOKEN)
