@@ -8,7 +8,12 @@ load_dotenv()
 TOKEN = os.environ.get("DISCORD_TOKEN")
 N8N_WEBHOOK_URL = os.environ.get("N8N_WEBHOOK_URL")
 
-# Configurar intents para leer mensajes
+# IDs de los canales donde el bot debe escuchar mensajes
+CANALES_ESPERADOS = [
+    1422296078278987978   # Puedes agregar más canales
+]
+
+# Configurar intents
 intents = discord.Intents.default()
 intents.message_content = True
 client = discord.Client(intents=intents)
@@ -23,6 +28,10 @@ async def on_message(message):
     if message.author == client.user:
         return
 
+    # Filtrar por canales permitidos
+    if message.channel.id not in CANALES_ESPERADOS:
+        return
+
     # Preparar payload para n8n
     payload = {
         "usuario": message.author.name,
@@ -31,11 +40,11 @@ async def on_message(message):
     }
 
     # Enviar datos a n8n
-    async with aiohttp.ClientSession() as session:
-        try:
+    try:
+        async with aiohttp.ClientSession() as session:
             await session.post(N8N_WEBHOOK_URL, json=payload)
-        except Exception as e:
-            print("Error enviando a n8n:", e)
+    except Exception as e:
+        print("Error enviando a n8n:", e)
 
 # Ejecutar bot
 client.run(TOKEN)
