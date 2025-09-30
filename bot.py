@@ -18,6 +18,7 @@ async def on_ready() -> None:
 
 @bot.event
 async def on_message(message: discord.Message) -> None:
+    print(f"Mensaje recibido en {message.channel.id} de {message.author}: {message.content}")
     await manejar_mensaje(message, bot)
 
 bot.run(DISCORD_TOKEN)
