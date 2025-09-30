@@ -12,7 +12,11 @@ async def setup_slash_commands(bot: Bot):
         name="buscar_shein",
         description="Busca un producto en Shein con rango de precios"
     )
-    async def buscar_shein(interaction: Interaction, producto: str, min_precio: int, max_precio: int):
+    async def buscar_shein(interaction: Interaction, 
+                        producto: str, 
+                        min_precio: int = 0, 
+                        max_precio: int = 6002790
+        ):
         canal_id = interaction.channel.id
         if canal_id not in CANALES_ESPERADOS:
             await interaction.response.send_message(
@@ -32,7 +36,7 @@ async def setup_slash_commands(bot: Bot):
         )
 
         await interaction.response.send_message(
-            "Consultando el producto en Shein, espera un momento...",
+            f"Buscando '{producto}' en Shein... Espera un momento.",
             ephemeral=True
         )
 
