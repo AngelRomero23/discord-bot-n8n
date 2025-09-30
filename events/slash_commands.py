@@ -20,7 +20,7 @@ async def setup_slash_commands(bot: Bot) -> None:
             return
 
         # Enviar datos a n8n
-        await enviar_comando_a_n8n(interaction.user.name, "precio", canal_id)
+        await enviar_comando_a_n8n(interaction.user.name, "get_discounted_price", canal_id)
 
         # Respuesta inmediata
         await interaction.response.send_message(
