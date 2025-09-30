@@ -1,6 +1,6 @@
 from discord import app_commands, Interaction, Client, Object
 from settings.settings import CANALES_ESPERADOS, N8N_WEBHOOK_URL
-from ..utils.n8n import enviar_comando_a_n8n
+from utils.n8n import enviar_comando_a_n8n
 
 # Coloca aquí el ID de tu servidor de prueba
 GUILD_ID = 1419556707935191102  # reemplaza con tu ID real
