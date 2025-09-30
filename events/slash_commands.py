@@ -1,5 +1,5 @@
 from discord import app_commands, Interaction, Client
-from config.config import CANALES_ESPERADOS
+from configs.settings import CANALES_ESPERADOS
 from utils.n8n import enviar_comando_a_n8n
 
 async def setup_slash_commands(client: Client) -> None:
