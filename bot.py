@@ -29,3 +29,4 @@ async def on_message(message: discord.Message) -> None:
     await manejar_mensaje(message, bot)
 
 bot.run(DISCORD_TOKEN)
+
