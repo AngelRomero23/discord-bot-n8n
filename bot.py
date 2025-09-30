@@ -1,6 +1,6 @@
 import discord
 from discord import Client
-from config.config import DISCORD_TOKEN
+from .config.config import DISCORD_TOKEN
 from events.on_message import manejar_mensaje
 from events.slash_commands import setup_slash_commands
 
