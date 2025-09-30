@@ -1,20 +1,14 @@
 import aiohttp
-import os
+from settings.settings import N8N_WEBHOOK_URL
 
-async def enviar_comando_a_n8n(usuario: str, comando: str, canal: int) -> None:
-    """
-    Envía la ejecución de un comando a n8n vía webhook.
-    """
+async def enviar_comando_a_n8n(usuario: str, comando: str, canal_id: int) -> None:
+    """Envía el comando recibido a n8n vía webhook"""
     payload = {
         "usuario": usuario,
         "comando": comando,
-        "canal": str(canal)
+        "canal": canal_id
     }
-    try:
-        async with aiohttp.ClientSession() as session:
-            await session.post(
-                url=os.environ.get("N8N_WEBHOOK_URL"),
-                json=payload
-            )
-    except Exception as e:
-        print("Error enviando comando a n8n:", e)
+    async with aiohttp.ClientSession() as session:
+        async with session.post(N8N_WEBHOOK_URL, json=payload) as resp:
+            if resp.status != 200:
+                print(f"Error enviando a n8n: {resp.status}")
