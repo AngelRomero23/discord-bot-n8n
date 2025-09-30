@@ -3,7 +3,7 @@ from settings.settings import CANALES_ESPERADOS, N8N_WEBHOOK_URL
 from utils.n8n import enviar_comando_a_n8n
 
 # Coloca aquí el ID de tu servidor de prueba
-GUILD_ID = 1419556707935191102  # reemplaza con tu ID real
+GUILD_ID = 1422296078278987978  # reemplaza con tu ID real
 
 async def setup_slash_commands(client: Client) -> None:
     """
@@ -13,7 +13,7 @@ async def setup_slash_commands(client: Client) -> None:
 
     @client.tree.command(
         name="precio",
-        description="Obtén el precio de las camisas",
+        description="Obtén el precio de un producto con descuento actual de Shein",
         guild=Object(id=GUILD_ID)  # <-- esto hace que sea guild command
     )
     async def precio(interaction: Interaction) -> None:
