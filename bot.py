@@ -1,5 +1,5 @@
 import discord
-import configs.settings
+import settings.settings
 from discord import Client
 from events.on_message import manejar_mensaje
 from events.slash_commands import setup_slash_commands
@@ -18,4 +18,4 @@ async def on_ready() -> None:
 async def on_message(message: discord.Message) -> None:
     await manejar_mensaje(message, client)
 
-client.run(configs.settings.DISCORD_TOKEN)
+client.run(settings.settings.DISCORD_TOKEN)
